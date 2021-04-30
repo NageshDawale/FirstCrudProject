@@ -1,0 +1,77 @@
+
+   
+   <nav class="navbar navbar-expand-lg navbar-light container-fluid" style="background-color: #85aaf2;">
+    <!-- <a class="navbar-brand"></a> -->
+    
+    <img src="assets/Images/exela.png" id="exelaimg">
+    <div id="navbarNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto ">
+        <mat-icon>tag_faces</mat-icon>&nbsp; 
+        <li class="nav-item">
+          <!-- <a class="nav-link" routerLink="/signup">Add User</a> -->
+          <h4 [matMenuTriggerFor]="menu">Nagesh Dawale <br>&nbsp;&nbsp; admin</h4>
+        </li>
+        <!-- <button mat-button >Menu</button> -->&nbsp;
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+        
+        
+      </ul>
+    </div>
+</nav>
+ 
+ <!-- <div class="row" id="headerid">
+     <img src="assets/Images/exela.png" id="exelaimg">
+     <p>hello</p>
+     <mat-icon>expand more</mat-icon>
+     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M12.44 6.44L9 9.88 5.56 6.44 4.5 7.5 9 12l4.5-4.5z"/></svg>
+ </div> -->
+
+  <div class="row" style="height: 100%;">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="sidenav">
+
+       
+            <mat-sidenav mode="side" opened="true">
+                <mat-nav-list>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon class="menu-button sidnav-button" (click)="isExpand=!isExpand">menu</mat-icon>
+                        <span *ngIf="isExpand">Menu</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon class="">home</mat-icon>
+                        <span *ngIf="isExpand">Dashboard</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon class="" routerLink="/users">groups</mat-icon>
+                        <span *ngIf="isExpand">Users</span>
+                    </mat-list-item>
+
+                </mat-nav-list>
+            </mat-sidenav>
+        
+
+    </div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <mat-card>Dashboard</mat-card>
+        <br><br>
+        <div id="divchart">
+            <p>Registered Users</p>
+            <!-- <canvas id="myChart"></canvas> -->
+    
+            <div style="display: block; width: 800px;">
+              <canvas baseChart 
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+              </canvas>
+            </div>
+        </div>
+        <br><br><br>
+                <div id="copyrights">Copyright 2021, Exela PFP-GP V1.0.0, All Rights Reserved</div>
+    </div>
+  </div>

@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <img src="assets/Images/registrationpage.jpg" width="100%" height="100%">
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <div class="seconddiv">
+                <div id="icondiv">
+                    <mat-icon>home</mat-icon>
+                </div>
+                <br>
+                <div>
+                    <img src="assets/Images/exela.png" class="center">
+                </div>
+                <br><br><br> 
+                <div>
+                    <form [formGroup]='loginForm'  novalidate> <!-- (ngSubmit)="loginProcess()"-->
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input class="form-control" type="text" formControlName="Username" required>
+                        </div>
+                        <!--Error msg-->
+                        <div *ngIf="loginForm.controls['Username'].invalid && (loginForm.controls['Username'].dirty || loginForm.controls['Username'].touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="loginForm.controls['Username'].errors">
+                                Please fill the field with min 3 characters, max 10 characters.
+                            </div>
+                            <!-- <div *ngIf="loginForm.controls['Username'].errors.minLength">
+                                minimum 4 characters require.
+                            </div>
+                            <div *ngIf="loginForm.controls['Username'].errors.maxLength">
+                                Maximun 10 characters require.
+                              </div> -->
+                        </div>
+                        <!--End-->
+
+
+                        <br>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input class="form-control" type="password" formControlName="Password" required>
+                        </div>
+                        <!--Error message-->
+                        <div *ngIf="loginForm.controls['Password'].invalid && (loginForm.controls['Password'].dirty || loginForm.controls['Password'].touched)"
+                            class="alert alert-danger">
+                            <div *ngIf="loginForm.controls['Password'].errors">
+                                Password is required.
+                            </div>
+                        </div>
+                        <!--End error message-->
+                        <br>
+
+                        <div>
+                            <mat-checkbox class="example-margin"> &nbsp; Remember me</mat-checkbox>
+                        </div>
+                        <br>
+                        <div>
+                            <button type="submit" mat-raised-button color="accent" (click)="login()" class="btn btn-block">  <!--(click)="login()" routerLink="/dashboard" -->
+                                Login
+                            </button>
+                        </div>
+
+                    </form>
+                    <br>
+                    <div>
+                        <a class="text-primary" id="forgotPassword">Forgot Password?</a>
+                        <a class="text-primary" id="forgotUserName">Forgot Username?</a>
+                    </div>
+                    <br><br>
+                    <div>
+                        New User? &nbsp;&nbsp; <a class="text-primary" routerLink="/signup">Create an Account </a>
+                    </div>
+                </div>
+                <br><br><br><br><br><br><br>
+                <div id="copyrights">Copyright 2021, Exela PFP-GP V1.0.0, All Rights Reserved</div>
+            </div>
+        </div>
+    </div>
+</div>
