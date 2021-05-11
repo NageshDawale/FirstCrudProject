@@ -13,9 +13,10 @@
                 <div>
                     <img src="assets/Images/exela.png" class="center">
                 </div>
-                <br><br><br> 
+                <br><br><br>
                 <div>
-                    <form [formGroup]='loginForm'  novalidate> <!-- (ngSubmit)="loginProcess()"-->
+                    <form [formGroup]='loginForm' novalidate>
+                        <!-- (ngSubmit)="loginProcess()"-->
                         <div class="form-group">
                             <label>User Name</label>
                             <input class="form-control" type="text" formControlName="Username" required>
@@ -57,7 +58,9 @@
                         </div>
                         <br>
                         <div>
-                            <button type="submit" mat-raised-button color="accent" (click)="login()" class="btn btn-block">  <!--(click)="login()" routerLink="/dashboard" -->
+                            <button type="submit" mat-raised-button color="accent" (click)="login()"
+                                class="btn btn-block">
+                                <!--(click)="login()" routerLink="/dashboard" -->
                                 Login
                             </button>
                         </div>

@@ -11,8 +11,8 @@ mongoose.connect(mongoDb.db, {
   useFindAndModify: false,
   useUnifiedTopology: true
 }).then(() => {
-    console.log('Database sucessfully connected ')
-  },
+  console.log('Database sucessfully connected ')
+},
   error => {
     console.log('Database error: ' + error)
   }
@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 // Static directory path
-app.use(express.static(path.join(__dirname, 'dist/MeanCrudDemo')));
+app.use(express.static(path.join(__dirname, './public/uploads')));
 
 
 // API root

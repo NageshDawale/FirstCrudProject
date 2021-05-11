@@ -2,69 +2,86 @@ const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
-//const createError = require('http-errors');
 const SignUpRoute = express.Router();
 let SignUp = require('../model/SignUp');
-//var ObjectId = require('mongoose').Types.ObjectId;
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { check, validationResult } = require("express-validator/check");
+const { check, validationResult } = require("express-validator");
+var multer = require('multer');
 
-// Add User
-SignUpRoute.route('/SignUp').post((req, res, next) => {
-SignUp.create(req.body, async (error, data) => {
-// SignUpRoute.post('/SignUp',async (req, res) => {
-  if (error) {
-    res.send(error)
-  } else {
-    data.Password = await bcrypt.hashSync(data.Password, 10);
-    data.save();   
-    res.send({
-      Username: data.Username,
-      FirstName: data.FirstName,
-      LastName: data.LastName,
-      Email: data.Email,
-      Phone: data.Phone,
-      DOB: data.DOB,
-      UserId: data.UserId,
-      Gender: data.Gender,
-      Password: data.Password
-    })
-    res.json(data)
+var path = require('path');
+
+// SignUpRoute.use(express.static(__dirname+"./public/uploads"));
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './public/uploads/');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now()+file.originalname)
+//   }
+// })
+
+SignUpRoute.use(express.static(__dirname + "./public/uploads"));
+
+var storage = multer.diskStorage({
+  destination: "./public/uploads/",
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
   }
 });
+
+var upload = multer({
+  storage: storage
+});
+
+// Add User   // ,upload.single('profilepic'),
+SignUpRoute.route('/SignUp').post(upload.single('profilepic'), (req, res, next) => {
+  SignUp.create(req.body, async (error, data) => {
+
+    if (error) {
+      res.send(error)
+    } else {
+      data.Password = await bcrypt.hashSync(data.Password, 10);
+      data.save();
+      res.send({
+        Username: data.Username,
+        FirstName: data.FirstName,
+        LastName: data.LastName,
+        Email: data.Email,
+        Phone: data.Phone,
+        DOB: data.DOB,
+        Role: data.Role,
+        Gender: data.Gender,
+        Password: data.Password,
+        profilepic: data.profilepic.path
+      })
+      res.json(data)
+    }
+  });
 });
 
 
-// router.post("/users",async (req, res) => {
-//   //console.log(req.file);
-//   if (error) {
-//       return res.status(400).send({
-//           message: "Required field can not be empty",
-//       });
-//   }
-//   const user = await UserData({
-//       Username: req.body.Username,
-//       FirstName: req.body.FirstName,
-//       LastName: req.body.LastName,
-//       Email: req.body.Email,
-//       Phone: req.body.Phone,
-//       DOB: req.body.DOB,
-//       UserId: req.body.UserId,
-//      // role: req.body.role,
-//       Gender: req.body.Gender,
-//       Password: req.body.Password,
-//       // varifypassword: req.body.varifypassword,
-//       // profile:req.file.originalname
-//   });
-//   user.save();
-//   res.send(user);
+// SignUpRoute.post('/create',upload.single('profilepic'), function(req, res, next) {
+//   //console.log(req,file)
+//     var newEmp = new employee({
+//         username:req.body.username,
+//         firstname:req.body.firstname,
+//         lastname:req.body.lastname,
+//         dob:req.body.dob,
+//         gender:req.body.gender,
+//         email:req.body.email,
+//         phone:req.body.phone,
+//         password:req.body.password,
+//         profilepic:req.file.path
+//     });
+
+//     newEmp.save((err, employee)=>{
+//         if(err)
+//             res.status(500).json({errmsg:err});
+//         res.status(200).json({msg:employee});    
+//     })
+
 // });
-
-
-
-
-
 
 
 // Get all Users
@@ -164,50 +181,48 @@ SignUpRoute.route('/delete-user/:id').delete((req, res) => {
 
 //login user    
 SignUpRoute.post("/login", async (req, res) => {
-    const errors = validationResult(req);
-    console.log('login successfull');
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array()
-      });
-    }
-   
-    const { Username, Password } = req.body;
-    try {
-      let user = await SignUp.findOne({ Username });
-      if (!user)
-        return res.status(400).json({
-          message: "Incorrect User name"
-        });
-
-      const isMatch = await bcrypt.compare(Password, user.Password);
-      if (!isMatch)
-        return res.status(400).json({
-          message: "Incorrect Password "
-        });
-
-      const payload = { user: { id: user.id }};
-
-      let token=jwt.sign(payload, "randomString", {
-          expiresIn: 3000
-        },
-        (err, token) => {
-          if (err) throw err;
-          res.status(200).json({
-            token
-          });
-        }
-      );
-
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "Server Error"
-      });
-    }
+  const errors = validationResult(req);
+  console.log('login successfull');
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      errors: errors.array()
+    });
   }
+
+  const { Username, Password } = req.body;
+  try {
+    let user = await SignUp.findOne({ Username });
+    if (!user)
+      return res.status(400).json({
+        message: "Incorrect User name"
+      });
+
+    const isMatch = await bcrypt.compare(Password, user.Password);
+    if (!isMatch)
+      return res.status(400).json({
+        message: "Incorrect Password "
+      });
+
+    const payload = { user: { id: user.id } };
+
+    let token = jwt.sign(payload, "randomString", {
+      expiresIn: 3000
+    },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json({
+          token
+        });
+      }
+    );
+
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      message: "Server Error"
+    });
+  }
+}
 );
-
-
 
 module.exports = SignUpRoute;

@@ -1,0 +1,20 @@
+
+#headerid{
+    background-color: skyblue;
+    margin: 0%;
+    height: 70px;
+}
+#exelaimg{
+    width: 200px;
+    z-index: 1;
+    height: 70px; 
+    margin: 0%;
+    padding: 0%;
+    float: left;
+}  
+
+
+#sidenav{
+    height: 100%;
+    background-color: skyblue;
+}

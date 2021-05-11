@@ -1,0 +1,220 @@
+<nav class="navbar navbar-expand-lg navbar-light container-fluid" style="background-color: #85aaf2;">
+    <!-- <a class="navbar-brand"></a> -->
+  
+    <img src="assets/Images/exela.png" id="exelaimg">
+    <div id="navbarNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto ">
+        <mat-icon>tag_faces</mat-icon>&nbsp;
+        <li class="nav-item">
+          <!-- <a class="nav-link" routerLink="/signup">Add User</a> -->
+          <h4 [matMenuTriggerFor]="menu">{{username}} <br> {{role}}</h4>
+        </li>
+        <!-- <button mat-button >Menu</button> -->&nbsp;
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
+  
+  
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- <div class="row" id="headerid">
+       <img src="assets/Images/exela.png" id="exelaimg">
+       <p>hello</p>
+       <mat-icon>expand more</mat-icon>
+       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M12.44 6.44L9 9.88 5.56 6.44 4.5 7.5 9 12l4.5-4.5z"/></svg>
+   </div> -->
+  
+  <div class="row" style="height: 100%;">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="sidenav">
+  
+  
+      <mat-sidenav mode="side" opened="true">
+        <mat-nav-list>
+          <mat-list-item>
+            <mat-icon mat-list-icon class="menu-button sidnav-button" (click)="isExpand=!isExpand">menu</mat-icon>
+            <span *ngIf="isExpand">Menu</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon class="" routerLink="/dashboard">home</mat-icon>
+            <span *ngIf="isExpand">Dashboard</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon mat-list-icon class="" routerLink="/users">groups</mat-icon>
+            <span *ngIf="isExpand">Users</span>
+          </mat-list-item>
+  
+        </mat-nav-list>
+      </mat-sidenav>
+  
+  
+    </div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <br>
+        <h3>Create New User</h3>
+      <br>
+      <div>
+        <form [formGroup]="SignUpForm" (ngSubmit)=onSubmit() enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input class="form-control" type="text" formControlName="Username" placeholder="user name"
+                          [ngClass]="{'is-invalid':submitted}" />
+                        <div *ngIf="submitted && f.Username.errors" class="invalid-feedback">
+                          User name is required
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Last Name</label>
+                        <input class="form-control" type="text" formControlName="LastName" required>
+                      </div>
+                      <!--Error message-->
+                      <div
+                        *ngIf="SignUpForm.controls['LastName'].invalid && (SignUpForm.controls['LastName'].dirty || SignUpForm.controls['LastName'].touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="SignUpForm.controls['LastName'].errors">
+                          Last Name is required.
+                        </div>
+                      </div>
+                      <!--End error message-->
+
+                      <div class="form-group">
+                        <label>Phone</label>
+                        <input class="form-control" type="tel" formControlName="Phone" placeholder="phone"
+                          [ngClass]="{'is-invalid':submitted}" />
+                        <div *ngIf="submitted && f.Username.errors" class="invalid-feedback">
+                          phone number is required
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Role</label>
+                        <select formControlName="Role" class="form-control">
+                          <option>select Role</option>
+                          <option *ngFor="let role of Role">{{role}}</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" type="password" formControlName="Password" placeholder="password"
+                          [ngClass]="{'is-invalid':submitted}" />
+                        <div *ngIf="submitted && f.Username.errors" class="invalid-feedback">
+                          Password is required
+                        </div>
+                      </div>
+                      <!--Error message-->
+                      <div
+                        *ngIf="SignUpForm.controls['Password'].invalid && (SignUpForm.controls['Password'].dirty || SignUpForm.controls['Password'].touched)"
+                        class="alert alert-danger">
+                        <div *ngIf="SignUpForm.controls['Password'].errors">
+                          Password is required.
+                        </div>
+                      </div>
+                      <!--End error message-->
+
+                      <div class="form-group">
+                        <label>Profile Image</label>
+                        <input type="file" formControlName="profilepic">
+                      </div>
+          
+
+                </div>
+            
+           
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input class="form-control" type="text" formControlName="FirstName" required>
+                    </div>
+                    <!--Error message-->
+                    <div
+                    *ngIf="SignUpForm.controls['FirstName'].invalid && (SignUpForm.controls['FirstName'].dirty || SignUpForm.controls['FirstName'].touched)"
+                        class="alert alert-danger">
+                    <div *ngIf="SignUpForm.controls['FirstName'].errors">
+                        First Name is required.
+                    </div>
+                    </div>
+                    <!--End error message-->
+                    
+
+            
+
+            <div class="form-group">
+              <label>Email</label>
+              <input class="form-control" type="email" formControlName="Email" placeholder="Email"
+                [ngClass]="{'is-invalid':submitted}" />
+              <div *ngIf="submitted && f.Username.errors" class="invalid-feedback">
+                email is required
+              </div>
+            </div>
+            <!--Error message-->
+            <div
+              *ngIf="SignUpForm.controls['Email'].invalid && (SignUpForm.controls['Email'].dirty || SignUpForm.controls['Email'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="SignUpForm.controls['Email'].errors">
+                Email is required.
+              </div>
+            </div>
+            <!--End error message-->
+
+            
+
+            <div class="form-group">
+              <label>Date Of Birth</label>
+              <input class="form-control" type="date" formControlName="DOB">
+            </div>
+
+
+            
+
+            <div class="form-group">
+              <label>Gender</label>
+              <select formControlName="Gender" class="form-control">
+                <option>select gender</option>
+                <option *ngFor="let gen of gender">{{gen}}</option>
+              </select>
+            </div>
+
+            
+
+            
+
+            <div class="form-group">
+              <label>Verify Password</label>
+              <input class="form-control" type="password" formControlName="VerifyPassword"
+                placeholder="re-enter password" [ngClass]="{'is-invalid':submitted}" />
+              <div *ngIf="submitted && f.VerifyPassword.errors" class="invalid-feedback">
+                <div *ngIf="f.VerifyPassword.errors.MustMatch"> Password not matching </div>
+              </div>
+            </div>
+
+           <div class="row">
+               <div class="col-md-2"></div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                    <a routerLink="/users"> CANCEL </a>
+                  </div>
+               </div>
+               <div class="col-md-2">
+                <button type="submit" mat-raised-button color="accent" class="btn">
+                    SUBMIT
+                  </button>
+               </div>
+           </div>
+            
+        </div>
+        </div>
+
+        </form>
+
+      </div>
+  
+      <br><br><br><br>
+      <div id="copyrights">Copyright 2021, Exela PFP-GP V1.0.0, All Rights Reserved</div>
+    </div>
+  </div>
