@@ -18,3 +18,8 @@
     height: 100%;
     background-color: skyblue;
 }
+
+
+img {
+    border-radius: 50%;
+  }

@@ -21,21 +21,21 @@ var path = require('path');
 //   }
 // })
 
-SignUpRoute.use(express.static(__dirname + "./public/uploads"));
+// SignUpRoute.use(express.static(__dirname + "./public/uploads"));
+//lasttime
+// var storage = multer.diskStorage({
+//   destination: "./public/uploads/",
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+//   }
+// });
 
-var storage = multer.diskStorage({
-  destination: "./public/uploads/",
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
-  }
-});
+// var upload = multer({
+//   storage: storage
+// });
 
-var upload = multer({
-  storage: storage
-});
-
-// Add User   // ,upload.single('profilepic'),
-SignUpRoute.route('/SignUp').post(upload.single('profilepic'), (req, res, next) => {
+// Add User   // ,upload.single('profilepic'),upload.single('profilepic'),
+SignUpRoute.route('/SignUp').post((req, res, next) => {
   SignUp.create(req.body, async (error, data) => {
 
     if (error) {
@@ -53,7 +53,7 @@ SignUpRoute.route('/SignUp').post(upload.single('profilepic'), (req, res, next) 
         Role: data.Role,
         Gender: data.Gender,
         Password: data.Password,
-        profilepic: data.profilepic.path
+        file: data.file
       })
       res.json(data)
     }

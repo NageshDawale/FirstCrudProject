@@ -4,7 +4,7 @@
     <img src="assets/Images/exela.png" id="exelaimg">
     <div id="navbarNav" class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto ">
-        <mat-icon>tag_faces</mat-icon>&nbsp;
+        <img src="{{file}}" style="width: 50px; height: 40px; margin-right: 5px;"/>  
         <li class="nav-item">
           <!-- <a class="nav-link" routerLink="/signup">Add User</a> -->
           <h4 [matMenuTriggerFor]="menu">{{username}} <br> {{role}}</h4>
@@ -27,7 +27,7 @@
        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M12.44 6.44L9 9.88 5.56 6.44 4.5 7.5 9 12l4.5-4.5z"/></svg>
    </div> -->
   
-  <div class="row" style="height: 100%;">
+  <div class="row" style="height: 100%;"  [formGroup]="SignUpForm">
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="sidenav">
   
   
@@ -54,7 +54,21 @@
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
         <br>
         <h3>Create New User</h3>
-      <br>
+      
+
+      <label class="hoverable" for="fileInput">
+        <img  name="image" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" width="50px" height="50px"> 
+        <div class="hover-text">Change Image
+          <!-- <img class="camimg" src="assets/cameraicon.jpg" /> -->
+    
+        </div>
+        <div class="background"></div>
+      </label> 
+      <br/>
+    <input id="fileInput" type='file' formControlName="file"  (change)="onSelectFile($event)">
+      <br><br>
+
+
       <div>
         <form [formGroup]="SignUpForm" (ngSubmit)=onSubmit() enctype="multipart/form-data">
             <div class="row">
@@ -117,10 +131,10 @@
                       </div>
                       <!--End error message-->
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label>Profile Image</label>
                         <input type="file" formControlName="profilepic">
-                      </div>
+                      </div> -->
           
 
                 </div>

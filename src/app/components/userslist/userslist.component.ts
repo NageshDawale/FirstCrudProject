@@ -23,7 +23,7 @@ export class UserslistComponent implements OnInit {
       console.log(res)
       this.Users = res;
     });
-  }
+  } 
 
   delete(id: any, i: any) {
     console.log(id);

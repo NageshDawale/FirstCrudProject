@@ -10,5 +10,5 @@ export class SignUp {
     Gender!: String;
     Password!: String;
     VarifyPassword!: String;
-    profilepic!:File;
+    file!:String;
 }

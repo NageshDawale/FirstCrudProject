@@ -13,6 +13,7 @@ export class SignUpComponent implements OnInit {
   gender: any = ['male', 'female'];
   Role: any = ['admin', 'manager', 'engineer'];
   submitted = false;
+  url: any;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -33,7 +34,7 @@ export class SignUpComponent implements OnInit {
       Gender: [''],
       Password: ['', Validators.required],
       VerifyPassword: ['', Validators.required],
-      profilepic: ['', Validators.required]
+     // profilepic: ['', Validators.required]
     }, {
       validators: this.MustMatch('Password', 'VerifyPassword')
     })
@@ -70,6 +71,8 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+
+ 
 
   //signupdata: Array<any> = [];
 

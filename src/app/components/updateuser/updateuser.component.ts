@@ -14,6 +14,7 @@ export class UpdateuserComponent implements OnInit {
   getId: any;
   updateForm: FormGroup;
   isExpand: boolean = true;
+  url: any;
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -59,6 +60,10 @@ export class UpdateuserComponent implements OnInit {
   }
 
   onUpdate(): any {
+
+    let i = sessionStorage.getItem('image');
+      console.log('session value'+i);
+      this.updateForm.value.file=i;
     this.crudService.updateuser(this.getId, this.updateForm.value)
       .subscribe(() => {
         console.log('Data updated successfully!')
@@ -80,6 +85,7 @@ export class UpdateuserComponent implements OnInit {
   //Get Users Role
   User: any = [];
   role!: string;
+  file!: string;
   getUserRole() {
     this.crudService.GetUsers().subscribe((res) => {
       this.User = res;
@@ -90,6 +96,7 @@ export class UpdateuserComponent implements OnInit {
 
         if (value.Username == this.username) {
           this.role = value.Role;
+          this.file = value.file;
           console.log(this.role);
         }
 
@@ -106,5 +113,27 @@ export class UpdateuserComponent implements OnInit {
       console.log("user logout successfull...");
     }  
     }
+
+
+    // file upload
+   onSelectFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+        //store image from base 64 format 
+       // console.log("my ts file url is " + this.url);
+        sessionStorage.setItem('image', this.url)
+        // console.log('File value in onselect'+this.newuserForm.value.file);
+
+
+      }
+    }
+  }
+
 
 }

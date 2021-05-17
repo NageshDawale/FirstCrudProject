@@ -13,7 +13,7 @@ let SignUp = new Schema({
   Role: { type: String },
   Gender: { type: String },
   Password: { type: String, required: true }, //minlength: 8, maxlength: 16, trim: true,
-  profilepic: { type: String },
+  file: { type: String },
   Date: { type: Date, default: Date.now }
 }, {
   collection: 'SignUP'

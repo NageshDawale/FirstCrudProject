@@ -59,6 +59,7 @@ export class DashboardComponent implements OnInit {
   //Get Users Role
   User: any = [];
   role!: string;
+  file!:string;
   getUserRole() {
     this.crudService.GetUsers().subscribe((res) => {
       this.User = res;
@@ -69,6 +70,7 @@ export class DashboardComponent implements OnInit {
 
         if (value.Username == this.username) {
           this.role = value.Role;
+          this.file = value.file;
           console.log(this.role);
         }
 

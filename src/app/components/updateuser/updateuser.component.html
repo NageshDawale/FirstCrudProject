@@ -8,7 +8,7 @@
   <img src="assets/Images/exela.png" id="exelaimg">
   <div id="navbarNav" class="collapse navbar-collapse">
     <ul class="navbar-nav ml-auto ">
-      <mat-icon>tag_faces</mat-icon>&nbsp;
+      <img src="{{file}}" style="width: 50px; height: 40px; margin-right: 5px;"/>  
       <li class="nav-item">
         <!-- <a class="nav-link" routerLink="/signup">Add User</a> -->
         <h4 [matMenuTriggerFor]="menu">{{username}} <br> {{role}}</h4>
@@ -52,13 +52,26 @@
 
       </mat-nav-list>
     </mat-sidenav>
-
+ 
 
   </div>
   <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-
-    <br>
     <h3 class="h3">Update User</h3><br>
+
+    <label class="hoverable" for="fileInput">
+      <img  name="image" [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" width="50px" height="50px"> 
+      <div class="hover-text">Change Image
+        <!-- <img class="camimg" src="assets/cameraicon.jpg" /> -->
+  
+      </div>
+      <div class="background"></div>
+    </label>
+    <br/>
+  <input id="fileInput" type='file' formControlName="file"  (change)="onSelectFile($event)">
+
+
+    <br><br>
+    
     <div class="row">
       <div class="col-md-5">
         <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">

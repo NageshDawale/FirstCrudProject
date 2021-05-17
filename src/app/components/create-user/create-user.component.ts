@@ -15,6 +15,7 @@ export class CreateUserComponent implements OnInit {
   Role: any = ['admin', 'manager', 'engineer'];
   gender: any = ['male', 'female'];
   submitted = false;
+  url: any;
   constructor(
     private formBuilder: FormBuilder,
     private ngZone: NgZone,
@@ -35,7 +36,8 @@ export class CreateUserComponent implements OnInit {
       Gender: [''],
       Password: ['', Validators.required],
       VerifyPassword: ['', Validators.required],
-      profilepic: ['', Validators.required]
+      //profilepic: ['', Validators.required]
+      file:''
     }, {
       validators: this.MustMatch('Password', 'VerifyPassword')
     })
@@ -66,6 +68,11 @@ export class CreateUserComponent implements OnInit {
     this.submitted = true;
     if (this.SignUpForm.invalid)
       return;
+      //console.log('File value');
+      let i = sessionStorage.getItem('image');
+      console.log('session value'+i);
+      this.SignUpForm.value.file=i; 
+      
     this.crudService.AddUser(this.SignUpForm.value).subscribe(() => {
       console.log('Data added successfully!')
       alert("User Added In Database")
@@ -94,6 +101,7 @@ export class CreateUserComponent implements OnInit {
   //Get Users Role
   User: any = [];
   role!: string;
+  file!:string;
   getUserRole() {
     this.crudService.GetUsers().subscribe((res) => {
       this.User = res;
@@ -104,6 +112,7 @@ export class CreateUserComponent implements OnInit {
 
         if (value.Username == this.username) {
           this.role = value.Role;
+          this.file = value.file;
           console.log(this.role);
         }
 
@@ -111,6 +120,28 @@ export class CreateUserComponent implements OnInit {
 
     });
 
+  }
+
+
+
+   // file upload
+   onSelectFile(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.url = event.target.result;
+        //store image from base 64 format 
+       // console.log("my ts file url is " + this.url);
+        sessionStorage.setItem('image', this.url)
+        // console.log('File value in onselect'+this.newuserForm.value.file);
+
+
+      }
+    }
   }
 
 }
